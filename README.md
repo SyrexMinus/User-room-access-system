@@ -4,6 +4,7 @@ Project implements access system between users and rooms on C++ programming lang
 Homework Solution 2 on the Introduction to programming 2 course at Innopolis University.
 
 ![](https://habrastorage.org/webt/jk/sm/9x/jksm9x__s0on-xbxmlaf-ovwzmo.png)
+
 Example of program work.
 
 ## Usage
