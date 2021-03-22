@@ -1,10 +1,9 @@
 # University access system
 Project implements access system between users and rooms on C++ programming language.
 
-Homework Solution 2 on the Introduction to programming 2 course at Innopolis University.
+Homework Solution 3 on the Introduction to programming 2 course at Innopolis University.
 
-![](https://habrastorage.org/webt/jk/sm/9x/jksm9x__s0on-xbxmlaf-ovwzmo.png)
-
+![](https://habrastorage.org/webt/vr/eu/xf/vreuxfpnqxpnoib8k0g6rvtbluy.png)
 Example of program work.
 
 ## Usage
@@ -12,14 +11,25 @@ Example of program work.
 ### Instruction
 1. Clone repo.
 2. Install Visual Studio 2019 (VS).
-3. Open *PSSHW2/PSSHW2.sln* using VS.
+3. Open *PSSHW3/PSSHW2.sln* using VS.
 4. In VS press *Local Windows Debugger* button (or *f5* hotkey). The program starts running. The console will open.
 5. The program will ask you to enter a username. Enter one of the existing names in the system.
    1. If you tried to log in through the admin, you will need to enter the password for his account.
 6. Enter any of the suggested commands.
 
+### For testing guest account, blue level, emergency
+1. Run the program
+2. Login as Guest — enter comand `Guest`
+3. Check your access level — *Blue*
+4. Check in *Rooms avaliable* list that lecture and conference rooms of 1st floor avaliable (for example, 108), 
+they have blue access level. But same types of rooms of other floors are unavalible (for example, 430).
+5. Turn on emergency — enter command `emergencyon`.
+6. Check that now all rooms become avaliable — enter command `info`.
+7. Turn off emergency — enter command `emergencyoff`.
+8. Check that now you have access for only *blue* access level rooms — enter command `info`.
+
 ### How to change rooms and users database
-In *PSSHW2/source.cpp* change the contents of sets rooms and users: add / remove / modify instances of rooms and users.
+In *PSSHW3/source.cpp* change the contents of sets rooms and users: add / remove / modify instances of rooms and users.
 
 ## Implemented functionality
 - Access levels for both rooms and users
@@ -35,6 +45,8 @@ After authorization the user can enter commands for interacting with the system.
 
 For all users:
 - `access [room number]` — try to access room.
+- `emergencyon` — turn on emergency mode.
+- `emergencyoff` — turn off emergency mode.
 - `info` — show info about you.
 - `logout` — exit from your account.
 
@@ -53,6 +65,7 @@ If the user is in room's *whiteList*, then he can access it unconditionally. Not
 
 | Level | Rooms | Users |
 | - | - | - |
+| BLUE | Lecture room and Conference room of 1st floor | Guest |
 | NO_LEVEL | Class room | Student |
 | GREEN | Lecture room | Lab employee |
 | YELLOW | Conference room | Professor, Director |
@@ -61,7 +74,7 @@ If the user is in room's *whiteList*, then he can access it unconditionally. Not
 ## Classes of Rooms
 
 ### In the system implemented following classes of rooms:
-- `Room` — superclass for all types of rooms. It has parameters: `roomNumber`, `accessLevel`, `whiteList`, `blackList`.
+- `Room` — superclass for all types of rooms. It has parameters: `roomNumber`, `accessLevel`, `whiteList`, `blackList`. Also it adds global variable `bool emergencyMode` which, when true, allows any user access any room.
    - Constructor: `Room(int roomNumber, AccessLevel accessLevel, +(User user));`
    - Methods:
       - `void grantAccess(User user);` — add user to white list and delete him from black list.
@@ -70,9 +83,9 @@ If the user is in room's *whiteList*, then he can access it unconditionally. Not
       - `virtual bool access(User user);` — return if user has access to the room.
 - `ClassRoom` — room of `NO_LEVEL` access level. By default, it can be accessed by any user.
    - Constructor: `ClassRoom(int roomNumber);`
-- `LectureRoom` — room of `GREEN` access level. By default, it can be accessed by lab employees, professors, directors and admins.
+- `LectureRoom` — room of `GREEN` access level (`BLUE` if room on the 1st floor, i.e. room number is between 100 and 199). By default, it can be accessed by lab employees, professors, directors and admins.
    - Constructor: `LectureRoom(int roomNumber);`
-- `ConferenceRoom` — room of `YELLOW` access level. By default, it can be accessed by professors, directors and admins.
+- `ConferenceRoom` — room of `YELLOW` access level (`BLUE` if room on the 1st floor, i.e. room number is between 100 and 199). By default, it can be accessed by professors, directors and admins.
    - Constructor: `ConferenceRoom(int roomNumber);`
 - `Cabinet` — room of `RED` access level. By default, it can be accessed by only one user, for example, professor or director, and admins.
    - Constructor: `Cabinet(int roomNumber, User user);`
@@ -87,6 +100,9 @@ If the user is in room's *whiteList*, then he can access it unconditionally. Not
    - Methods:
       - `virtual std::string getUserType();` — returns string with user type.
       - `bool checkPassword(std::string password);` — check if input password equal to user's password.
+   - Constructor: `Admin(std::string name, std::string favoriteEnergyDrink, std::string password);`
+- `Guest` — user of `BLUE` access level. Represents guest. Its `extra` parameter is misterious message: *This account was used by many people...*.
+   - Constructor: `Guest();`
 - `Student` — user of `NO_LEVEL` access level. Represents student. Its `extra` parameter is *scholarship*.
    - Constructor: `Student(std::string name, std::string scholarship);`
 - `Lab` — user of `GREEN` access level. Represents lab employee. Its `extra` parameter is *lab name*.
@@ -96,7 +112,6 @@ If the user is in room's *whiteList*, then he can access it unconditionally. Not
 - `Dir` — user of `YELLOW` access level. Represents director. Its `extra` parameter is *hobby*.
    - Constructor: `Dir(std::string name, std::string hobby);`
 - `Admin` — user of `RED` access level. Represents system admin. Its `extra` parameter is *favorite energy drink*.
-   - Constructor: `Admin(std::string name, std::string favoriteEnergyDrink, std::string password);`
 
 ## class SystemInterface
 

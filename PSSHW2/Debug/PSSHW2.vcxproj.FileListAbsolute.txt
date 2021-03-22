@@ -1,4 +1,0 @@
-D:\P2P\Documents\Code\C++\PSS2HW2\PSSHW2\Debug\PSSHW2.exe
-D:\P2P\Documents\Code\C++\PSS2HW2\PSSHW2\Debug\PSSHW2.pdb
-D:\P2P\Documents\Code\C++\PSS2HW2_Release\PSSHW2\Debug\PSSHW2.exe
-D:\P2P\Documents\Code\C++\PSS2HW2_Release\PSSHW2\Debug\PSSHW2.pdb
